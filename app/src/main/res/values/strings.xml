@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">صحيني</string>
+
+    <!-- عام -->
+    <string name="ok">موافق</string>
+    <string name="cancel">إلغاء</string>
+    <string name="save">حفظ</string>
+
+    <!-- شاشة البداية -->
+    <string-array name="splash_hints">
+        <item>اللهم صل على محمد وعلى آله وصحبه وسلم</item>
+        <item>نتمنى لك استخداماً مفيداً للتطبيق</item>
+        <item>لا تنسى تقييم التطبيق</item>
+    </string-array>
+
+    <!-- إعداد المنبه -->
+    <string name="set_alarm">ضبط منبه جديد</string>
+    <string name="alarm_time">وقت المنبه</string>
+    <string name="alarm_date">تاريخ المنبه</string>
+    <string name="repeat_daily">تكرار يومي</string>
+    <string name="repeat_weekly">تكرار أسبوعي</string>
+    <string name="select_days">اختر الأيام</string>
+    <string name="alarm_tone">نغمة المنبه</string>
+    <string name="alarm_note">ملاحظة المنبه</string>
+    <string name="alarm_save_success">تم حفظ المنبه بنجاح</string>
+    <string name="time_until_alarm">المنبه بعد %1$s</string>
+
+    <!-- أيام الأسبوع -->
+    <string-array name="days_of_week">
+        <item>الأحد</item>
+        <item>الاثنين</item>
+        <item>الثلاثاء</item>
+        <item>الأربعاء</item>
+        <item>الخميس</item>
+        <item>الجمعة</item>
+        <item>السبت</item>
+    </string-array>
+
+    <!-- التحديات -->
+    <string name="challenge_title">استيقظ وأكمل التحدي!</string>
+    <string name="button_game_title">لعبة الأزرار</string>
+    <string name="button_game_desc">اضغط على الأزرار للوصول إلى 50 نقطة</string>
+    <string name="button_game_points">النقاط: %1$d</string>
+    <string name="math_challenge_title">تحدي الرياضيات</string>
+    <string name="math_challenge_desc">أجب على 5 أسئلة رياضية</string>
+    <string name="math_question_count">السؤال %1$d من 5</string>
+    <string name="steps_challenge_title">تحدي الخطوات</string>
+    <string name="steps_challenge_desc">امشِ %1$d خطوات للإيقاف</string>
+    <string name="steps_progress">%1$d / %2$d خطوة</string>
+
+    <!-- الأذونات -->
+    <string name="permission_required">الصلاحيات المطلوبة</string>
+    <string name="permission_explanation">يحتاج التطبيق للصلاحيات التالية للعمل بشكل صحيح:</string>
+    <string name="grant_permissions">منح الصلاحيات</string>
+    <string name="permissions_denied">لن يعمل التطبيق بشكل صحيح بدون هذه الصلاحيات</string>
+    <string name="select_time">اختار الوقت</string>
+</resources>
