@@ -10,11 +10,14 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
 lifecycleLivedata = "2.5.1"
+lifecycleLivedataVersion = "2.6.1"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
 materialVersion = "1.7.0"
+roomCompiler = "2.5.2"
 roomRuntime = "2.4.3"
+roomRuntimeVersion = "2.5.2"
 
 [libraries]
 androidx-appcompat-v151 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
@@ -24,7 +27,10 @@ androidx-espresso-core-v350 = { module = "androidx.test.espresso:espresso-core",
 androidx-junit-v114 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycleLivedata" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycleLivedata" }
+androidx-lifecycle-livedata-v261 = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycleLivedataVersion" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleLivedata" }
+androidx-room-compiler-v252 = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-runtime-v252 = { module = "androidx.room:room-runtime", version.ref = "roomRuntimeVersion" }
 androidx-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "roomRuntime" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

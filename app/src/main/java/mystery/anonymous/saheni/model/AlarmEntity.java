@@ -1,37 +1,35 @@
 package mystery.anonymous.saheni.model;
 
-import android.icu.util.Calendar;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import java.util.Date;
-import java.util.List;
-
-import mystery.anonymous.saheni.utils.DateTimeConverter;
 
 @Entity(tableName = "alarms")
-@TypeConverters(DateTimeConverter.class)
 public class AlarmEntity {
-    @PrimaryKey(autoGenerate = true) private int id;
-    private int hour, minute;
-    private boolean isActive, isRepeat;
-    private boolean[] repeatDays = new boolean[7];
-    private long exactDate; // للتنبيهات لمرة واحدة
+    @PrimaryKey(autoGenerate = true)
+    private int alarmId;
 
-    private String label, ringtonePath;
+    @ColumnInfo(name = "time")
+    private long time;
 
-    public boolean isValidTime() {
-        return hour>=0 && hour<=23 && minute>=0 && minute<=59;
-    }
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public boolean isInPast() {
-        if (isRepeat) return false;
-        Calendar c = Calendar.getInstance();
-        c.set(hour, minute, 0);
-        return c.getTimeInMillis() < System.currentTimeMillis();
-    }
+    @ColumnInfo(name = "repeat_days")
+    private String repeatDays;
+
+    @ColumnInfo(name = "tone_uri")
+    private String toneUri;
+
+    @ColumnInfo(name = "note")
+    private String note;
+
+    // Getters and Setters
+    public int getAlarmId() { return alarmId; }
+    public void setAlarmId(int alarmId) { this.alarmId = alarmId; }
+    public long getTime() { return time; }
+    public void setTime(long time) { this.time = time; }
+    public String getRepeatDays() { return repeatDays; }
+    public void setRepeatDays(String repeatDays) { this.repeatDays = repeatDays; }
+    public String getToneUri() { return toneUri; }
+    public void setToneUri(String toneUri) { this.toneUri = toneUri; }
+    public String getNote() { return note; }
+    public void setNote(String note) { this.note = note; }
 }

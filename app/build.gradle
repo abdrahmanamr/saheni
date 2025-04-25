@@ -46,4 +46,7 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit.v114
     androidTestImplementation libs.androidx.espresso.core.v350
+    implementation libs.androidx.room.runtime.v252
+    annotationProcessor libs.androidx.room.compiler.v252
+    implementation libs.androidx.lifecycle.livedata.v261
 }

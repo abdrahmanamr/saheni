@@ -1,6 +1,5 @@
 package mystery.anonymous.saheni.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -9,43 +8,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import missing.namespace.R;
 
 public class SplashActivity extends AppCompatActivity {
-    private static final long SPLASH_DURATION = 5000;
-    private TextView hintView;
-    private String[] hints;
-    private int hintIndex = 0;
-    private Handler handler = new Handler();
+    private TextView tvHint;
+    private String[] hints = {"Tip 1", "Tip 2", "Tip 3"};
+    private int currentHint = 0;
 
     @Override
-    protected void onCreate(Bundle s) {
-        super.onCreate(s);
-        setTheme(R.style.SplashTheme);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        hintView = findViewById(R.id.tv_hint);
-        hints = getResources().getStringArray(R.array.splash_hints);
-
-        rotateHints();
-        handler.postDelayed(() -> {
-            startActivity(new Intent(this, MainActivity.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            finish();
-        }, SPLASH_DURATION);
+        tvHint = findViewById(R.id.tv_hint);
+        startHintCycle();
     }
 
-    private void rotateHints() {
+    private void startHintCycle() {
+        final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                hintView.setText(hints[hintIndex]);
-                hintIndex = (hintIndex + 1) % hints.length;
+                tvHint.setText(hints[currentHint % hints.length]);
+                currentHint++;
                 handler.postDelayed(this, 1000);
             }
-        }, 0);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
+        }, 1000);
     }
 }

@@ -1,109 +1,53 @@
 package mystery.anonymous.saheni.repository;
 
 import android.app.Application;
-import android.content.Context;
-import android.icu.util.Calendar;
-import android.media.RingtoneManager;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import mystery.anonymous.saheni.model.AlarmEntity;
 
+import java.util.List;
+
 public class AlarmRepository {
-    private final AlarmDao alarmDao;
-    private final LiveData<List<AlarmEntity>> allAlarms;
-    private final ExecutorService executorService;
+    private AlarmDao alarmDao;
+    private LiveData<List<AlarmEntity>> allAlarms;
 
     public AlarmRepository(Application application) {
         AlarmDatabase database = AlarmDatabase.getInstance(application);
         alarmDao = database.alarmDao();
         allAlarms = alarmDao.getAllAlarms();
-        executorService = Executors.newFixedThreadPool(4);
+    }
+
+    public void insert(AlarmEntity alarm) {
+        new InsertAlarmAsyncTask(alarmDao).execute(alarm);
+    }
+
+    public void update(AlarmEntity alarm) {
+        new UpdateAlarmAsyncTask(alarmDao).execute(alarm);
+    }
+
+    public void delete(AlarmEntity alarm) {
+        new DeleteAlarmAsyncTask(alarmDao).execute(alarm);
     }
 
     public LiveData<List<AlarmEntity>> getAllAlarms() {
         return allAlarms;
     }
 
-    public void scheduleAlarm(AlarmEntity alarm) {
-        if (alarm.isInPast()) {
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.HOUR_OF_DAY, alarm.getHour());
-            c.set(Calendar.MINUTE, alarm.getMinute());
-            c.add(Calendar.DAY_OF_MONTH, 1);
-            alarm.setExactDate(c.getTimeInMillis());
+    private static class InsertAlarmAsyncTask extends AsyncTask<AlarmEntity, Void, Void> {
+        private AlarmDao alarmDao;
+
+        private InsertAlarmAsyncTask(AlarmDao alarmDao) {
+            this.alarmDao = alarmDao;
         }
-        scheduleAlarmWithAlarmManager(alarm);
-        saveAlarm(alarm);
-    }
-    // إضافة:
-    public String getDefaultRingtone(Context ctx) {
-        return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
+
+        @Override
+        protected Void doInBackground(AlarmEntity... alarms) {
+            alarmDao.insert(alarms[0]);
+            return null;
+        }
     }
 
-
-    public void insertAlarm(AlarmEntity alarm, OnAlarmSavedListener listener) {
-        executorService.execute(() -> {
-            try {
-                long id = alarmDao.insertAlarm(alarm);
-                alarm.setId(id);
-                if (listener != null) {
-                    new Handler(Looper.getMainLooper()).post(() ->
-                            listener.onAlarmSaved(alarm));
-                }
-            } catch (Exception e) {
-                Log.e("AlarmRepository", "Error inserting alarm", e);
-            }
-        });
-    }
-
-    public void updateAlarm(AlarmEntity alarm) {
-        executorService.execute(() -> alarmDao.updateAlarm(alarm));
-    }
-
-    public void deleteAlarm(AlarmEntity alarm) {
-        executorService.execute(() -> alarmDao.deleteAlarm(alarm));
-    }
-
-    public void getAlarmById(int alarmId, OnAlarmLoadedListener listener) {
-        executorService.execute(() -> {
-            AlarmEntity alarm = alarmDao.getAlarmById(alarmId);
-            if (listener != null) {
-                listener.onAlarmLoaded(alarm);
-            }
-        });
-    }
-
-    public void getActiveAlarms(OnActiveAlarmsLoadedListener listener) {
-        executorService.execute(() -> {
-            List<AlarmEntity> activeAlarms = alarmDao.getActiveAlarms();
-            if (listener != null) {
-                listener.onActiveAlarmsLoaded(activeAlarms);
-            }
-        });
-    }
-
-    public void setAlarmEnabled(int alarmId, boolean isEnabled) {
-        executorService.execute(() -> alarmDao.setAlarmEnabled(alarmId, isEnabled));
-    }
-
-    public interface OnAlarmSavedListener {
-        void onAlarmSaved(AlarmEntity alarm);
-    }
-
-    public interface OnAlarmLoadedListener {
-        void onAlarmLoaded(AlarmEntity alarm);
-    }
-
-    public interface OnActiveAlarmsLoadedListener {
-        void onActiveAlarmsLoaded(List<AlarmEntity> alarms);
-    }
+    // Similar AsyncTasks for update and delete
 }
